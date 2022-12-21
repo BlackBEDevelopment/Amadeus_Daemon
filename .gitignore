@@ -1,3 +1,4 @@
 .ideagit rm -r --cached
 /.idea/
 /vendor/
+.idea/
