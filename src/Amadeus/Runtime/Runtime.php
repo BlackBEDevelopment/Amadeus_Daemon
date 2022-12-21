@@ -20,7 +20,7 @@ class Runtime
 
     public static function deleteProcessID($name): bool
     {
-        if(file_exists(self::$runtime . '/' . $name . '.pid')){
+        if (file_exists(self::$runtime . '/' . $name . '.pid')) {
             unlink(self::$runtime . '/' . $name . '.pid');
         }
         return !file_exists(self::$runtime . '/' . $name . '.pid');

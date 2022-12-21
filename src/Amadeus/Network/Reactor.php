@@ -3,12 +3,12 @@
 
 namespace Amadeus\Network;
 
+use Amadeus\IO\Logger;
 use Amadeus\Network\Frontend\User;
 use Amadeus\Network\Verification\API;
-use Swoole\WebSocket\Server;
-use Swoole\Websocket\Frame;
-use Amadeus\IO\Logger;
 use Amadeus\Process;
+use Swoole\Websocket\Frame;
+use Swoole\WebSocket\Server;
 
 /**
  * Class Reactor
@@ -57,6 +57,18 @@ class Reactor
     }
 
     /**
+     * @param int $fd
+     * @param string $reason
+     * @return bool
+     */
+    public static function rageQuit(int $fd, string $reason = 'Undefined'): bool
+    {
+        Logger::PrintLine('Kicked a user,fd: ' . $fd . ', Reason: ' . $reason, Logger::LOG_WARNING);
+        Process::getWebSocketServer()->getServer()->disconnect($fd, 4000, json_encode(array('action' => 'rageQuit', 'message' => array('reason' => $reason))));
+        return true;
+    }
+
+    /**
      * @param Server $server
      * @param int $fd
      * @return bool
@@ -73,18 +85,6 @@ class Reactor
 
     /**
      * @param int $fd
-     * @param string $reason
-     * @return bool
-     */
-    public static function rageQuit(int $fd, string $reason = 'Undefined'): bool
-    {
-        Logger::PrintLine('Kicked a user,fd: ' . $fd . ', Reason: ' . $reason, Logger::LOG_WARNING);
-        Process::getWebSocketServer()->getServer()->disconnect($fd, 4000, json_encode(array('action' => 'rageQuit', 'message' => array('reason' => $reason))));
-        return true;
-    }
-
-    /**
-     * @param int $fd
      * @param string $action
      * @param array $message
      * @return bool
@@ -93,9 +93,9 @@ class Reactor
     {
         $message['time'] = date('Y-m-d H:i:s', time());
         Process::getWebSocketServer()->getServer()->push($fd, json_encode(array('action' => $action, 'message' => $message), JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
-        $detail=json_encode($message, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
-        if(strlen($detail)>100){
-            $detail='*';
+        $detail = json_encode($message, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+        if (strlen($detail) > 100) {
+            $detail = '*';
         }
         Logger::printLine('Sending user' . $fd . ' a ' . $action . ' message, message detail: ' . $detail, Logger::LOG_INFORM);
         return true;
@@ -104,7 +104,7 @@ class Reactor
     public static function sendRdms(string $action, array $message): bool
     {
         $message['time'] = date('Y-m-d H:i:s', time());
-        foreach(self::$rdmsList as $item=>$none){
+        foreach (self::$rdmsList as $item => $none) {
             Process::getWebSocketServer()->getServer()->push($item, json_encode(array('action' => $action, 'message' => $message), JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
         }
         return true;

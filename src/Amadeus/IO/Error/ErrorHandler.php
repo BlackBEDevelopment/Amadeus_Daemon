@@ -29,7 +29,7 @@ class ErrorHandler
             case E_USER_ERROR:
                 Logger::printLine('PHP_ERROR [' . $errno . '] ' . $errstr . ' On line ' . $errline . ' In file ' . $errfile . ' Using ' . PHP_VERSION . ' On ' . PHP_OS, Logger::LOG_FATAL);
                 break;
-            CASE E_WARNING:
+            case E_WARNING:
             case E_USER_WARNING:
                 Logger::printLine('PHP_Warning [' . $errno . '] ' . $errstr . ' On line ' . $errline . ' In file ' . $errfile . ' Using ' . PHP_VERSION . ' On ' . PHP_OS, Logger::LOG_PANIC);
                 break;

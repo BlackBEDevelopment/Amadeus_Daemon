@@ -49,8 +49,8 @@ class User
 
     public function setStatus(bool $status): bool
     {
-        if($this->status!=$status){
-            $this->status=$status;
+        if ($this->status != $status) {
+            $this->status = $status;
             return true;
         }
         return false;

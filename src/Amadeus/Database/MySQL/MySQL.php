@@ -6,10 +6,10 @@ namespace Amadeus\Database\MySQL;
 
 use Amadeus\Config\Config;
 use Amadeus\IO\Logger;
+use Exception;
 use mysqli;
 use Ramsey\Uuid\Exception\UnsatisfiedDependencyException;
 use Ramsey\Uuid\Uuid;
-use Exception;
 
 /**
  * Class MySQL

@@ -4,7 +4,6 @@
 namespace Amadeus\Environment\Quota;
 
 use Amadeus\IO\Logger;
-use Exception;
 
 /**
  * Class Disk

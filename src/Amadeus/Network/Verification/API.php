@@ -5,7 +5,6 @@ namespace Amadeus\Network\Verification;
 
 
 use Amadeus\Config\Config;
-use Amadeus\IO\Logger;
 
 /**
  * Class API

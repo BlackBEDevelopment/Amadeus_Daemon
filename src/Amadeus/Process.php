@@ -2,11 +2,11 @@
 
 namespace Amadeus;
 
+use Amadeus\Config\Config;
 use Amadeus\Database\MySQL\MySQL;
 use Amadeus\Environment\ServerManager;
 use Amadeus\Game\GameControl;
 use Amadeus\IO\Logger;
-use Amadeus\Config\Config;
 use Amadeus\Network\WebSocketServer;
 use Amadeus\Plugin\PluginManager;
 use Composer\Autoload\ClassLoader;
@@ -89,21 +89,23 @@ class Process extends Xcraft implements SteinsMC
 
     public static function unload()
     {
-        if(self::$WebSocketServer instanceof WebSocketServer){
+        if (self::$WebSocketServer instanceof WebSocketServer) {
             self::$WebSocketServer->stop();
         }
-        if(self::$ServerManager instanceof ServerManager){
+        if (self::$ServerManager instanceof ServerManager) {
             self::$ServerManager->stopAllServers();
         }
     }
 
-    public static function setStatus(bool $status):bool{
-        self::$Status=$status;
-        return true;
+    public static function getStatus(): bool
+    {
+        return self::$Status;
     }
 
-    public static function getStatus():bool{
-        return self::$Status;
+    public static function setStatus(bool $status): bool
+    {
+        self::$Status = $status;
+        return true;
     }
 
     /**

@@ -6,7 +6,6 @@ namespace Amadeus\Environment;
 use Amadeus\Config\Config;
 use Amadeus\Environment\Quota\Disk;
 use Amadeus\IO\Logger;
-use Amadeus\Process;
 
 /**
  * Class Quota

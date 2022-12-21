@@ -26,16 +26,16 @@ class SampleConfig
         'daemon_port' => 2333,
         'daemon_workers' => 4,
         'daemon_password' => 'lixisgay',
-        'cgroup_enabled'=> true,
-        'quota_enabled'=>true,
-        'docker_enabled'=>false,
+        'cgroup_enabled' => true,
+        'quota_enabled' => true,
+        'docker_enabled' => false,
         'cgroup_dir' => '/sys/fs/cgroup',
         'cgroup_disk_primary_id' => 253,
         'cgroup_disk_secondary_id' => 0,
         'quota_disk' => '/dev/vda1',
         'quota_file_to_size_rate' => 4,
-        'rdms_enabled'=>true,
-        'rdms_password'=>'lixisverygay'
+        'rdms_enabled' => true,
+        'rdms_password' => 'lixisverygay'
     );
 
     /**
@@ -53,12 +53,12 @@ class SampleConfig
     public static function verify(array $config): bool
     {
         //妈妈再也不用担心我的密码背写进log里上传给开发者的时候密码被看见了
-        $config_masked=$config;
-        $config_masked['daemon_mysql_dbname']='*';
-        $config_masked['daemon_mysql_user']='*';
-        $config_masked['daemon_mysql_password']='*';
-        $config_masked['daemon_password']='*';
-        $config_masked['rdms_password']='*';
+        $config_masked = $config;
+        $config_masked['daemon_mysql_dbname'] = '*';
+        $config_masked['daemon_mysql_user'] = '*';
+        $config_masked['daemon_mysql_password'] = '*';
+        $config_masked['daemon_password'] = '*';
+        $config_masked['rdms_password'] = '*';
         Logger::printLine($config_masked, Logger::LOG_INFORM);
         foreach (self::$config as $k => $v) {
             Logger::printLine($k, Logger::LOG_INFORM);

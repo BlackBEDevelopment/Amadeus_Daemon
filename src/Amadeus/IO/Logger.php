@@ -78,17 +78,6 @@ class Logger
     }
 
     /**
-     * @return bool
-     */
-    public static function shutUp(): bool
-    {
-        self::$shutUp = true;
-        set_error_handler(self::$err);
-        set_exception_handler(self::$exc);
-        return true;
-    }
-
-    /**
      * @param $Message
      * @param int $Level
      */
@@ -98,12 +87,12 @@ class Logger
             return false;
         }
         if (is_array($Message)) {
-            file_put_contents('Amadeus.log', $log="[" . date("H:i:s") . " " . self::GetLevel($Level) . "] " . @debug_backtrace()[1]['class'] . @debug_backtrace()[1]['type'] . @debug_backtrace()[1]['function'] . ": " . json_encode($Message, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . PHP_EOL, FILE_APPEND);
+            file_put_contents('Amadeus.log', $log = "[" . date("H:i:s") . " " . self::GetLevel($Level) . "] " . @debug_backtrace()[1]['class'] . @debug_backtrace()[1]['type'] . @debug_backtrace()[1]['function'] . ": " . json_encode($Message, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . PHP_EOL, FILE_APPEND);
         } else {
-            file_put_contents('Amadeus.log', $log="[" . date("H:i:s") . " " . self::GetLevel($Level) . "] " . @debug_backtrace()[1]['class'] . @debug_backtrace()[1]['type'] . @debug_backtrace()[1]['function'] . ": " . $Message . PHP_EOL, FILE_APPEND);
+            file_put_contents('Amadeus.log', $log = "[" . date("H:i:s") . " " . self::GetLevel($Level) . "] " . @debug_backtrace()[1]['class'] . @debug_backtrace()[1]['type'] . @debug_backtrace()[1]['function'] . ": " . $Message . PHP_EOL, FILE_APPEND);
         }
-        if(Process::getStatus()==true){
-                Reactor::sendRdms('newLog',array('data'=>$log));
+        if (Process::getStatus() == true) {
+            Reactor::sendRdms('newLog', array('data' => $log));
         }
         if (self::getLevel($Level) == "  FATAL") {
             //exit("THE DAEMON DIES BECAUSE AN FATAL ERROR OCCURRED".PHP_EOL);
@@ -112,14 +101,6 @@ class Logger
             exit;
         }
         return true;
-    }
-
-    /**
-     * @return string
-     */
-    public static function getLog(): string
-    {
-        return file_get_contents('Amadeus.log');
     }
 
     /**
@@ -160,6 +141,25 @@ class Logger
                 $stype = " INFORM";
         }
         return $stype;
+    }
+
+    /**
+     * @return bool
+     */
+    public static function shutUp(): bool
+    {
+        self::$shutUp = true;
+        set_error_handler(self::$err);
+        set_exception_handler(self::$exc);
+        return true;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getLog(): string
+    {
+        return file_get_contents('Amadeus.log');
     }
 }
 

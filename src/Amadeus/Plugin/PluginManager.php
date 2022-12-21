@@ -68,19 +68,6 @@ class PluginManager
     }
 
     /**
-     * @Deprecacted
-     * @param $reference
-     * @param $name
-     * @return bool
-     */
-    public function register($reference, $name): bool
-    {
-        Logger::printLine('Registering ' . $name, Logger::LOG_INFORM);
-        $this->listeners[$name] = $reference;
-        return true;
-    }
-
-    /**
      * @param string $event
      * @param null $data
      * @return bool
@@ -96,6 +83,19 @@ class PluginManager
                 }
             }
         }
+        return true;
+    }
+
+    /**
+     * @Deprecacted
+     * @param $reference
+     * @param $name
+     * @return bool
+     */
+    public function register($reference, $name): bool
+    {
+        Logger::printLine('Registering ' . $name, Logger::LOG_INFORM);
+        $this->listeners[$name] = $reference;
         return true;
     }
 
